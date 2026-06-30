@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yahya Ibrahim — AI Researcher | Computer Vision &amp; 3D Scene Understanding</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0a192f;
+      --navy-2:  #112240;
+      --navy-3:  #1e3a5f;
+      --slate:   #8892b0;
+      --light:   #ccd6f6;
+      --white:   #e6f1ff;
+      --accent:  #64a2ff;
+      --accent2: #57cbff;
+      --text:    #1a1a2e;
+      --body-bg: #f8f9ff;
+      --card-bg: #ffffff;
+      --border:  #e2e8f0;
+      --font:    'Inter', sans-serif;
+      --mono:    'JetBrains Mono', monospace;
+      --nav-h:   70px;
+      --radius:  10px;
+      --shadow:  0 4px 20px rgba(10,25,47,.08);
+      --shadow-md: 0 8px 30px rgba(10,25,47,.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--body-bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+
+    section { padding: 90px 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 30px; }
+
+    /* ── Typography helpers ── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: #f97316;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      color: var(--slate);
+      max-width: 580px;
+      margin-bottom: 50px;
+    }
+    .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: .72rem;
+      background: #eef2ff;
+      color: #4338ca;
+      border-radius: 4px;
+      padding: 3px 10px;
+      margin: 3px 2px;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(10,25,47,.96);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 30px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: .9rem;
+      color: var(--light);
+      transition: color .2s;
+      font-family: var(--mono);
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links .nav-num {
+      color: var(--accent);
+      margin-right: 4px;
+      font-size: .8rem;
+    }
+    .nav-cv {
+      border: 1px solid var(--accent);
+      color: var(--accent) !important;
+      padding: 7px 16px;
+      border-radius: 5px;
+      transition: background .2s !important;
+    }
+    .nav-cv:hover { background: rgba(100,255,218,.1) !important; }
+
+    /* ── Hamburger (mobile) ── */
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--light); border-radius: 2px; transition: .3s; }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-affiliation {
+      font-family: var(--mono);
+      font-size: .85rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+      letter-spacing: .05em;
+    }
+    .hero-name {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .hero-title {
+      font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+      font-weight: 400;
+      color: var(--slate);
+      margin-bottom: 24px;
+      font-family: var(--mono);
+      letter-spacing: .02em;
+    }
+    .hero-bio {
+      color: var(--slate);
+      max-width: 540px;
+      font-size: .97rem;
+      margin-bottom: 36px;
+      line-height: 1.85;
+    }
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 48px;
+    }
+    .btn-primary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 12px 28px;
+      border-radius: 5px;
+      font-family: var(--mono);
+      font-size: .88rem;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-primary:hover { background: rgba(100,255,218,.1); }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--slate);
+      color: var(--light);
+      padding: 12px 28px;
+      border-radius: 5px;
+      font-family: var(--mono);
+      font-size: .88rem;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Social strip */
+    .hero-social {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .hero-social a {
+      color: var(--slate);
+      font-size: 1.15rem;
+      transition: color .2s, transform .2s;
+    }
+    .hero-social a:hover { color: var(--accent); transform: translateY(-2px); }
+
+    /* Photo */
+    .hero-photo {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .hero-photo-frame {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--accent);
+      background: var(--navy-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      top: 14px; left: 14px;
+      z-index: -1;
+      opacity: .4;
+    }
+
+    /* ── About ── */
+    #about { background: var(--body-bg); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 60px;
+      align-items: start;
+    }
+    .about-text p {
+      color: #3a3a5c;
+      margin-bottom: 16px;
+      font-size: .97rem;
+    }
+    .about-text .highlight { color: var(--accent); font-weight: 500; }
+
+    /* Quick-info sidebar */
+    .about-sidebar {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+    .about-sidebar h4 {
+      font-size: .78rem;
+      font-family: var(--mono);
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 14px;
+    }
+    .sidebar-links li { margin-bottom: 10px; }
+    .sidebar-links a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .88rem;
+      color: #4a4a6a;
+      transition: color .2s;
+    }
+    .sidebar-links a:hover { color: var(--accent); }
+    .sidebar-links i { width: 16px; color: var(--accent); font-size: .85rem; }
+    .sidebar-divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+    /* ── Research Areas ── */
+    #research { background: #f0f4ff; }
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .interest-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      cursor: default;
+    }
+    .interest-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: #a5b4fc;
+    }
+    .interest-icon {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      color: #4338ca;
+    }
+    .interest-card h4 { font-size: .97rem; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+    .interest-card p { font-size: .82rem; color: var(--slate); line-height: 1.65; }
+    .interest-methods {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .method-tag {
+      font-family: var(--mono);
+      font-size: .66rem;
+      background: #eef2ff;
+      color: #4338ca;
+      border: 1px solid #c7d2fe;
+      border-radius: 3px;
+      padding: 2px 7px;
+    }
+
+    /* ── Publications ── */
+    #publications { background: var(--body-bg); }
+    .pub-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+    .pub-filter-btn {
+      padding: 6px 18px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: .82rem;
+      font-family: var(--mono);
+      background: transparent;
+      cursor: pointer;
+      color: var(--slate);
+      transition: .2s;
+    }
+    .pub-filter-btn.active, .pub-filter-btn:hover {
+      border-color: #4338ca;
+      color: #4338ca;
+      background: #eef2ff;
+    }
+    .pub-list { display: flex; flex-direction: column; gap: 20px; }
+    .pub-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid #4338ca;
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      box-shadow: var(--shadow);
+      transition: box-shadow .2s;
+      display: grid;
+      grid-template-columns: 1fr 230px;
+      gap: 24px;
+      align-items: start;
+    }
+    .pub-card:hover { box-shadow: var(--shadow-md); }
+    .pub-card-img {
+      width: 230px;
+      height: 155px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      align-self: center;
+      background: #f8f9ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+    }
+    .pub-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform .35s;
+      display: block;
+    }
+    .pub-card:hover .pub-card-img img { transform: scale(1.04); }
+    .pub-img-empty {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border: 2px dashed #c7d2fe;
+      border-radius: 8px;
+      background: #f5f7ff;
+      color: #818cf8;
+      font-size: .7rem;
+      font-family: var(--mono);
+      text-align: center;
+      padding: 14px;
+    }
+    .pub-img-empty i { font-size: 1.6rem; opacity: .6; }
+    .pub-venue {
+      font-family: var(--mono);
+      font-size: .76rem;
+      color: var(--slate);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 8px;
+    }
+    .pub-venue .venue-name {
+      color: #f59e0b;
+      font-weight: 600;
+    }
+    .pub-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .pub-authors {
+      font-size: .86rem;
+      color: var(--slate);
+      margin-bottom: 10px;
+    }
+    .pub-authors .me { font-weight: 600; color: #4338ca; }
+    .pub-contribution {
+      font-size: .82rem;
+      color: #4a4a6a;
+      margin-bottom: 12px;
+      line-height: 1.55;
+      border-left: 3px solid #e0e7ff;
+      padding-left: 10px;
+    }
+    .pub-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pub-link {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: .76rem;
+      color: #4338ca;
+      border: 1px solid #c7d2fe;
+      border-radius: 4px;
+      padding: 4px 12px;
+      transition: background .2s;
+    }
+    .pub-link:hover { background: #eef2ff; }
+
+    /* ── Professional Service ── */
+    #service { background: var(--body-bg); padding: 70px 0; }
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .service-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      box-shadow: var(--shadow);
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: box-shadow .2s;
+    }
+    .service-card:hover { box-shadow: var(--shadow-md); }
+    .service-icon {
+      width: 42px; height: 42px;
+      border-radius: 8px;
+      background: #eef2ff;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: #4338ca;
+      font-size: 1rem;
+    }
+    .service-card h4 { font-size: .95rem; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .service-card p { font-size: .82rem; color: var(--slate); margin-bottom: 0; }
+    .service-meta {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: #a5b4fc;
+      margin-top: 6px;
+    }
+    .orcid-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: .82rem;
+      color: #16a34a;
+      margin-top: 16px;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .orcid-badge:hover { background: #dcfce7; }
+    .orcid-badge i { font-size: 1.1rem; }
+    @media (max-width: 700px) { .service-grid { grid-template-columns: 1fr; } }
+
+    /* ── Research Projects ── */
+    #demos { background: #f0f4ff; }
+    .demo-list { display: flex; flex-direction: column; gap: 28px; }
+    .demo-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      transition: box-shadow .25s;
+      min-height: 220px;
+    }
+    .demo-item:hover { box-shadow: var(--shadow-md); }
+    .demo-video-col {
+      position: relative;
+      background: var(--navy);
+      overflow: hidden;
+    }
+    .demo-video-col iframe,
+    .demo-video-col video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+    .demo-video-empty {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--slate);
+      font-family: var(--mono);
+      font-size: .72rem;
+      text-align: center;
+      padding: 20px;
+      cursor: default;
+      border-right: 1px solid rgba(100,255,218,.08);
+    }
+    .demo-video-empty i { font-size: 2.4rem; color: #4338ca; opacity: .5; }
+    .demo-video-empty code {
+      font-size: .62rem;
+      color: #64ffda;
+      background: rgba(100,255,218,.07);
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+    .demo-video-label {
+      position: absolute;
+      top: 10px; left: 10px;
+      font-family: var(--mono);
+      font-size: .68rem;
+      color: #64ffda;
+      background: rgba(10,25,47,.85);
+      padding: 3px 10px;
+      border-radius: 4px;
+      z-index: 1;
+    }
+    .demo-text-col { padding: 26px 28px; display: flex; flex-direction: column; }
+    .demo-text-col h4 { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .demo-pub-ref {
+      font-family: var(--mono);
+      font-size: .74rem;
+      color: #f59e0b;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+    .demo-desc { font-size: .87rem; color: #4a4a6a; margin-bottom: 14px; flex: 1; line-height: 1.7; }
+    .demo-method {
+      font-size: .82rem;
+      color: #4a4a6a;
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      background: #f0f4ff;
+      border-radius: 6px;
+      border-left: 3px solid #4338ca;
+      line-height: 1.55;
+    }
+    .demo-method strong { color: var(--navy); font-size: .8rem; }
+    .demo-tags { margin-bottom: 14px; }
+    .demo-links { display: flex; flex-wrap: wrap; gap: 10px; border-top: 1px solid var(--border); padding-top: 14px; margin-top: auto; }
+    .demo-btn {
+      display: flex; align-items: center; gap: 5px;
+      font-size: .78rem; font-family: var(--mono);
+      color: #4338ca; transition: color .2s;
+    }
+    .demo-btn:hover { color: #f97316; }
+    .demo-wip {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--mono); font-size: .7rem;
+      color: #f97316; background: #fff7ed;
+      border: 1px solid #fed7aa; border-radius: 4px;
+      padding: 3px 10px; margin-left: auto;
+    }
+    @media (max-width: 800px) {
+      .demo-item { grid-template-columns: 1fr; }
+      .demo-video-col { height: 210px; position: relative; }
+    }
+
+    /* ── Skills ── */
+    #skills { background: var(--body-bg); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 24px;
+    }
+    .skill-group h4 {
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 12px;
+    }
+    .skill-group .tag { background: #f0f4ff; color: #3730a3; margin: 4px 3px; }
+
+    /* Stats bar */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 36px;
+      margin-top: 60px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: var(--mono);
+      margin-bottom: 4px;
+    }
+    .stat-label { font-size: .82rem; color: var(--slate); }
+
+    /* ── Footer ── */
+    footer {
+      background: #05101f;
+      color: var(--slate);
+      text-align: center;
+      padding: 28px 30px;
+      font-family: var(--mono);
+      font-size: .78rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Scroll indicator ── */
+    .scroll-line {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: var(--accent);
+      z-index: 9999;
+      transition: width .1s;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-photo { margin: 0 auto; }
+      .hero-buttons, .hero-social { justify-content: center; }
+      .about-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: var(--nav-h); left: 0; right: 0; background: var(--navy); padding: 20px 30px; gap: 16px; }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 700px) {
+      .pub-card { grid-template-columns: 1fr; }
+      .pub-card-img { width: 100%; height: 180px; order: -1; }
+    }
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr 1fr; padding: 24px; }
+      section { padding: 60px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll progress bar -->
+<div class="scroll-line" id="scrollLine"></div>
+
+<!-- ── Navigation ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Dr. YI</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about"><span class="nav-num">01.</span>About</a></li>
+      <li><a href="#research"><span class="nav-num">02.</span>Research</a></li>
+      <li><a href="#publications"><span class="nav-num">03.</span>Publications</a></li>
+      <li><a href="#service"><span class="nav-num">04.</span>Service</a></li>
+      <li><a href="#demos"><span class="nav-num">05.</span>Projects</a></li>
+      <li><a href="#skills"><span class="nav-num">06.</span>Methods</a></li>
+      <li><a href="assets/CV_new_ind.pdf" target="_blank" class="nav-cv">CV ↗</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <p class="hero-affiliation">Machine Perception Laboratory · HUN-REN SZTAKI · Budapest, Hungary</p>
+        <h1 class="hero-name">Dr. Yahya Ibrahim</h1>
+        <h2 class="hero-title">AI Researcher · Computer Vision &amp; 3D Scene Understanding</h2>
+        <p class="hero-bio">
+          PhD graduate (2017–2023) from the Faculty of Information Technology and Bionics,
+          <a href="https://ppke.hu/oktatok/ibrahim-yahya-dr" target="_blank" rel="noopener" style="color:var(--light)"><strong>Pázmány Péter Catholic University (PPKE ITK)</strong></a>,
+          with six years of research at the
+          <a href="https://sztaki.hun-ren.hu/en/organisation/departments/mplab" target="_blank" rel="noopener" style="color:var(--light)"><strong>Machine Perception Laboratory, HUN-REN SZTAKI</strong></a>.
+          My research focuses on deep learning for <strong style="color:var(--light)">3D scene reconstruction</strong>,
+          multi-view point cloud completion, GAN-based image inpainting, and multispectral satellite image analysis —
+          with 11 publications, 163 citations, and an h-index of 6.
+        </p>
+        <div class="hero-buttons">
+          <a href="#publications" class="btn-primary">Publications</a>
+          <a href="#demos" class="btn-primary">Research Projects</a>
+          <a href="assets/CV_new_ind.pdf" target="_blank" rel="noopener" class="btn-ghost">Academic CV</a>
+        </div>
+        <div class="hero-social">
+          <a href="https://scholar.google.com/citations?user=1ShbTvIAAAAJ&hl=en" title="Google Scholar" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://orcid.org/0000-0003-0131-985X" title="ORCID" target="_blank" rel="noopener"><i class="fab fa-orcid"></i></a>
+          <a href="#" title="GitHub" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/yahya-ibrahim-a2b756108/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.researchgate.net/profile/Yahya-Ibrahim?ev=hdr_xprf" title="ResearchGate" target="_blank" rel="noopener"><i class="fab fa-researchgate"></i></a>
+          <a href="mailto:yahyaibrahim6@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+
+      <!-- Profile photo -->
+      <div class="hero-photo">
+        <div class="hero-photo-frame">
+          <img src="assets/yahya_tie.png" alt="Dr. Yahya Ibrahim" style="object-fit: cover; width: 100%; height: 100%;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ── -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">01. About</p>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="section-title">Research Background</h2>
+        <p>
+          I am a PhD graduate from the <span class="highlight">Faculty of Information Technology and Bionics,
+          Pázmány Péter Catholic University (PPKE ITK)</span>, Budapest, Hungary (2017–2023),
+          supervised by Prof. Csaba Benedek at the Machine Perception Laboratory (MPLab), HUN-REN SZTAKI,
+          where I have conducted six years of research. My doctoral dissertation,
+          <em>"Deep Learning Based Methods on 2D Image and 3D Structure Inpainting"</em>,
+          addresses the intersection of computer vision, deep generative modeling, and 3D scene understanding.
+          I hold a Master's degree (2013–2016) and Bachelor's degree (2009–2013) from
+          <span class="highlight">Tishreen University, Latakia, Syria</span>, with theses focused on
+          3D environment reconstruction using RGB-D cameras and laser-based object tracking.
+        </p>
+        <p>
+          My primary research contributions span <span class="highlight">multi-view 3D point cloud completion</span>
+          for autonomous driving and robotic perception (MVPCC-Net, Elsevier IVC 2023),
+          <span class="highlight">GAN-based blind inpainting</span> of masonry and architectural structures
+          (WACV 2021, MDPI Remote Sensing 2020), and <span class="highlight">semantic segmentation of
+          multispectral satellite imagery</span> for inland excess water detection (ICCVW 2025, IEEE/CVF).
+          Additional collaborations have contributed to brain-computer interfaces via
+          EEG-based motor imagery classification (IEEE BCI 2020, 57 citations).
+        </p>
+        <p>
+          I am actively engaged in drone perception and underwater LiDAR sensing through the
+          <span class="highlight">EU Proactif project</span>, and am exploring Neural Radiance Fields (NeRF)
+          and 3D Gaussian Splatting for real-time scene reconstruction. I am seeking
+          <span class="highlight">research scientist</span> positions where I can advance the
+          frontiers of 3D vision and generative modeling.
+        </p>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="about-sidebar">
+        <h4>Academic Profiles</h4>
+        <ul class="sidebar-links">
+          <li><a href="https://scholar.google.com/citations?user=1ShbTvIAAAAJ&hl=en" target="_blank"><i class="fas fa-graduation-cap"></i> Google Scholar</a></li>
+          <li><a href="https://orcid.org/0000-0003-0131-985X" target="_blank"><i class="fab fa-orcid"></i> ORCID <span style="font-family:var(--mono);font-size:.72em;color:#a5b4fc">0000-0003-0131-985X</span></a></li>
+          <li><a href="#" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/yahya-ibrahim-a2b756108/" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
+          <li><a href="https://www.researchgate.net/profile/Yahya-Ibrahim?ev=hdr_xprf" target="_blank"><i class="fab fa-researchgate"></i> ResearchGate</a></li>
+        </ul>
+        <div class="sidebar-divider"></div>
+        <h4>Affiliation</h4>
+        <ul class="sidebar-links">
+          <li><a href="#"><i class="fas fa-map-marker-alt"></i> Budapest, Hungary</a></li>
+          <li><a href="https://itk.ppke.hu/en" target="_blank"><i class="fas fa-university"></i> PPKE ITK / HUN-REN SZTAKI</a></li>
+          <li><a href="mailto:yahyaibrahim6@gmail.com"><i class="fas fa-envelope"></i> yahyaibrahim6@gmail.com</a></li>
+          <li><a href="assets/CV_new_ind.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i> Academic CV (PDF)</a></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ── Research Areas ── -->
+<section id="research">
+  <div class="container">
+    <p class="section-label">02. Research</p>
+    <h2 class="section-title">Research Areas</h2>
+    <p class="section-sub">
+      My work sits at the intersection of 3D computer vision, deep generative modeling, and geospatial remote sensing —
+      with a focus on scene reconstruction, structural inpainting, and intelligent satellite image analysis.
+    </p>
+    <div class="interests-grid">
+
+      <div class="interest-card">
+        <div class="interest-icon"><i class="fas fa-cubes"></i></div>
+        <h4>3D Scene Reconstruction</h4>
+        <p>Multi-view deep learning for LiDAR point cloud completion in autonomous driving and robotic perception contexts. Novel view synthesis and real-time rendering for complex scenes.</p>
+        <div class="interest-methods">
+          <span class="method-tag">NeRF</span>
+          <span class="method-tag">3D Gaussian Splatting</span>
+          <span class="method-tag">Point Cloud</span>
+          <span class="method-tag">Multi-View</span>
+        </div>
+      </div>
+
+      <div class="interest-card">
+        <div class="interest-icon"><i class="fas fa-magic"></i></div>
+        <h4>Image &amp; Structure Inpainting</h4>
+        <p>GAN-based blind inpainting of 2D textures and 3D structures, with applications to heritage masonry restoration, damage detection, and urban scene completion from LiDAR data.</p>
+        <div class="interest-methods">
+          <span class="method-tag">GAN</span>
+          <span class="method-tag">Blind Inpainting</span>
+          <span class="method-tag">Generative Models</span>
+        </div>
+      </div>
+
+      <div class="interest-card">
+        <div class="interest-icon"><i class="fas fa-brain"></i></div>
+        <h4>Deep Learning Architectures</h4>
+        <p>Design and training of CNN, GAN, Transformer, and Autoregressive architectures for semantic segmentation, object recognition, generative image synthesis, and 3D shape generation.</p>
+        <div class="interest-methods">
+          <span class="method-tag">Transformer</span>
+          <span class="method-tag">Autoregressive</span>
+          <span class="method-tag">CNN</span>
+          <span class="method-tag">GAN</span>
+        </div>
+      </div>
+
+      <div class="interest-card">
+        <div class="interest-icon"><i class="fas fa-satellite"></i></div>
+        <h4>Remote Sensing &amp; Geospatial AI</h4>
+        <p>Multispectral and SAR image fusion from Sentinel-1/2 satellites. Temporal gap-filling, semantic segmentation for change detection, and large-scale inland flood monitoring.</p>
+        <div class="interest-methods">
+          <span class="method-tag">Sentinel-1/2</span>
+          <span class="method-tag">SAR Fusion</span>
+          <span class="method-tag">Segmentation</span>
+          <span class="method-tag">Time Series</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Publications ── -->
+<section id="publications">
+  <div class="container">
+    <p class="section-label">03. Publications</p>
+    <h2 class="section-title">Selected Publications</h2>
+    <p class="section-sub">
+      11 publications · 163 citations · h-index 6 · i10-index 5.
+      Full list on
+      <a href="https://scholar.google.com/citations?user=1ShbTvIAAAAJ&hl=en" style="color:#4338ca; text-decoration:underline;" target="_blank">Google Scholar</a>.
+    </p>
+
+    <div class="pub-filters">
+      <button class="pub-filter-btn active">All</button>
+      <button class="pub-filter-btn">Conference</button>
+      <button class="pub-filter-btn">Journal</button>
+      <button class="pub-filter-btn">Dissertation</button>
+    </div>
+
+    <div class="pub-list">
+
+      <!-- ① IEW — ICCVW 2025 -->
+      <div class="pub-card">
+        <div>
+          <p class="pub-venue">
+            <span class="venue-name">ICCVW — IEEE/CVF · SEA Workshop</span> &nbsp;·&nbsp; 2025
+          </p>
+          <h3 class="pub-title">Inland Excess Water (IEW) Monitoring Using Sentinel-1/2: A SplitClass Segmentation and Temporal Gap-Filling Approach</h3>
+          <p class="pub-authors">
+            <span class="me">Y. Ibrahim</span>, M. Belényesi, C. Liu, M. Richter-Cserey, M. Simon, T. Sziranyi, C. Benedek
+          </p>
+          <p class="pub-contribution">
+            Proposes a SplitClass segmentation network that fuses Sentinel-1 SAR and Sentinel-2 multispectral data with a temporal gap-filling strategy to achieve robust inland excess water detection under cloud cover.
+          </p>
+          <div class="pub-links">
+            <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=1ShbTvIAAAAJ&citation_for_view=1ShbTvIAAAAJ:_FxGoFyzp5QC"
+               class="pub-link" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+            <a href="https://openaccess.thecvf.com/content/ICCV2025W/SEA/html/Ibrahim_Inland_Excess_Water_IEW_Monitoring_Using_Sentinel-12_A_SplitClass_Segmentation_ICCVW_2025_paper.html"
+               class="pub-link" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> CVF</a>
+            <a href="https://openaccess.thecvf.com/content/ICCV2025W/SEA/papers/Ibrahim_Inland_Excess_Water_IEW_Monitoring_Using_Sentinel-12_A_SplitClass_Segmentation_ICCVW_2025_paper.pdf"
+               class="pub-link" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i> PDF</a>
+            <a href="https://waterdetection.github.io/water_detection/"
+               class="pub-link" target="_blank" rel="noopener"><i class="fas fa-globe"></i> Project</a>
+          </div>
+        </div>
+        <div class="pub-card-img">
+          <img src="assets/IEW.png" alt="IEW segmentation result">
+        </div>
+      </div>
+
+      <!-- ② MVPCC-Net — Elsevier 2023 -->
+      <div class="pub-card">
+        <div>
+          <p class="pub-venue">
+            <span class="venue-name">Image and Vision Computing — Elsevier</span> &nbsp;·&nbsp; 2023 &nbsp;·&nbsp;
+            <strong style="color:#4338ca">11 citations</strong>
+          </p>
+          <h3 class="pub-title">MVPCC-Net: Multi-View Based Point Cloud Completion Network for MLS Data</h3>
+          <p class="pub-authors">
+            <span class="me">Y. Ibrahim</span>, C. Benedek
+          </p>
+          <p class="pub-contribution">
+            Introduces MVPCC-Net, a deep network that completes partial Mobile Laser Scanning (MLS) point clouds by aggregating multi-view 2D projections, enabling high-fidelity 3D vehicle reconstruction for autonomous driving.
+          </p>
+          <div class="pub-links">
+            <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=1ShbTvIAAAAJ&citation_for_view=1ShbTvIAAAAJ:Y0pCki6q_DkC"
+               class="pub-link" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+            <a href="https://www.sciencedirect.com/science/article/pii/S0262885623000495"
+               class="pub-link" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> ScienceDirect</a>
+            <a href="https://github.com/sztaki-geocomp/Multi-view-3d-completion"
+               class="pub-link" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
+          </div>
+        </div>
+        <div class="pub-card-img">
+          <img src="assets/MVPCC.png" alt="MVPCC-Net point cloud completion result">
+        </div>
+      </div>
+
+      <!-- ③ Deep Learning Masonry Wall — MDPI 2020 -->
+      <div class="pub-card">
+        <div>
+          <p class="pub-venue">
+            <span class="venue-name">Remote Sensing — MDPI</span> &nbsp;·&nbsp; 2020 &nbsp;·&nbsp;
+            <strong style="color:#4338ca">39 citations</strong>
+          </p>
+          <h3 class="pub-title">Deep Learning-Based Masonry Wall Image Analysis</h3>
+          <p class="pub-authors">
+            <span class="me">Y. Ibrahim</span>, B. Nagy, C. Benedek
+          </p>
+          <p class="pub-contribution">
+            Presents a CNN-based pipeline for automatic brick segmentation, mortar joint detection, and damage classification on historical masonry walls, enabling scalable heritage documentation without manual annotation.
+          </p>
+          <div class="pub-links">
+            <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=1ShbTvIAAAAJ&citation_for_view=1ShbTvIAAAAJ:qjMakFHDy7sC"
+               class="pub-link" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+            <a href="https://www.mdpi.com/2072-4292/12/23/3918"
+               class="pub-link" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> MDPI</a>
+          </div>
+        </div>
+        <div class="pub-card-img">
+          <img src="assets/MDPI.png" alt="Masonry wall segmentation result">
+        </div>
+      </div>
+
+      <!-- ④ Multi-View 3D — ICPR 2022 -->
+      <div class="pub-card">
+        <div>
+          <p class="pub-venue">
+            <span class="venue-name">ICPR — IEEE</span> &nbsp;·&nbsp; 2022 &nbsp;·&nbsp;
+            <strong style="color:#4338ca">7 citations</strong>
+          </p>
+          <h3 class="pub-title">Multi-View Based 3D Point Cloud Completion Algorithm for Vehicles in Autonomous Driving</h3>
+          <p class="pub-authors">
+            <span class="me">Y. Ibrahim</span>, B. Nagy, C. Benedek
+          </p>
+          <p class="pub-contribution">
+            Extends multi-view point cloud completion to vehicles in real-world autonomous driving datasets, demonstrating significant improvement in completeness and geometric accuracy of occluded LiDAR scans.
+          </p>
+          <div class="pub-links">
+            <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=1ShbTvIAAAAJ&citation_for_view=1ShbTvIAAAAJ:zYLM7Y9cAGgC"
+               class="pub-link" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+            <a href="https://ieeexplore.ieee.org/abstract/document/9956459/"
+               class="pub-link" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> IEEE Xplore</a>
+            <a href="https://github.com/sztaki-geocomp/Multi-view-3d-completion"
+               class="pub-link" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
+          </div>
+        </div>
+        <div class="pub-card-img">
+          <img src="assets/IEEE_ICPR.png" alt="Multi-view 3D completion result">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Professional Service ── -->
+<section id="service">
+  <div class="container">
+    <p class="section-label">04. Service</p>
+    <h2 class="section-title">Professional Service</h2>
+    <p class="section-sub" style="margin-bottom:28px">
+      Peer reviewer at 4 Elsevier journals &nbsp;·&nbsp; 9 reviews &nbsp;·&nbsp;
+      <a href="https://orcid.org/0000-0003-0131-985X" target="_blank" rel="noopener"
+         style="color:#4338ca;text-decoration:underline"><i class="fab fa-orcid"></i> Verified on ORCID</a>
+    </p>
+    <!-- Research Visit -->
+    <div class="service-card" style="margin-bottom:20px;max-width:680px">
+      <div class="service-icon"><i class="fas fa-plane"></i></div>
+      <div>
+        <h4>Research Visit — Nanyang Technological University (NTU), Singapore</h4>
+        <p style="font-size:.85rem;color:var(--slate);margin-bottom:6px">
+          Three-day delegation visit with Prof. Csaba Benedek and lab director Tamás Szirányi to NTU Singapore (November 2025).
+          Meetings with Prof. Weisi Lin, Dean Prof. Wen Yonggang, Prof. Loy Chen Change (S-Lab), and CoNiC Lab.
+          Focus on geospatial intelligence, earth observation, generative multimedia, and establishing joint research &amp; exchange programmes.
+        </p>
+        <a href="https://sztaki.hun-ren.hu/aktualitasok/hirek/2025/hun-ren-sztaki-gepi-erzekeles-kutatolaboratorium-kutatoi-szakmai"
+           target="_blank" rel="noopener"
+           style="font-family:var(--mono);font-size:.75rem;color:#4338ca;text-decoration:underline">
+          <i class="fas fa-external-link-alt"></i> Read the full report (HUN-REN SZTAKI)
+        </a>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+      <div class="service-card" style="padding:14px 18px;gap:12px">
+        <div class="service-icon" style="width:34px;height:34px;font-size:.85rem"><i class="fas fa-robot"></i></div>
+        <div>
+          <h4 style="font-size:.88rem">Engineering Applications of AI</h4>
+          <p class="service-meta" style="margin-top:2px">Elsevier Q1 &nbsp;·&nbsp; 2025</p>
+        </div>
+      </div>
+      <div class="service-card" style="padding:14px 18px;gap:12px">
+        <div class="service-icon" style="width:34px;height:34px;font-size:.85rem"><i class="fas fa-hard-hat"></i></div>
+        <div>
+          <h4 style="font-size:.88rem">Automation in Construction</h4>
+          <p class="service-meta" style="margin-top:2px">Elsevier Q1 &nbsp;·&nbsp; 2024</p>
+        </div>
+      </div>
+      <div class="service-card" style="padding:14px 18px;gap:12px">
+        <div class="service-icon" style="width:34px;height:34px;font-size:.85rem"><i class="fas fa-ruler-combined"></i></div>
+        <div>
+          <h4 style="font-size:.88rem">Measurement</h4>
+          <p class="service-meta" style="margin-top:2px">Elsevier Q1 &nbsp;·&nbsp; 2024</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Research Projects ── -->
+<section id="demos">
+  <div class="container">
+    <p class="section-label">05. Projects</p>
+    <h2 class="section-title">Research Projects &amp; Demonstrations</h2>
+    <p class="section-sub">
+      End-to-end research pipelines from raw sensor data to deployed systems — spanning 3D perception,
+      geospatial satellite analysis, heritage image analysis, and embodied AI.
+    </p>
+
+    <div class="demo-list">
+
+      <!-- ① 3D Vision for Robots -->
+      <div class="demo-item">
+        <div class="demo-video-col">
+          <span class="demo-video-label">3D Vision</span>
+          <iframe src="https://www.youtube.com/watch?v=iQ_SWNuF2a4"
+            title="MVPCC-Net: Multi-View Point Cloud Completion"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="demo-text-col">
+          <h4>3D Point Cloud Completion for Robotic Perception</h4>
+          <p class="demo-pub-ref">MVPCC-Net · Image and Vision Computing, Elsevier · 2023 · 11 citations</p>
+          <p class="demo-desc">
+            Addresses the challenge of incomplete LiDAR scans caused by occlusion in autonomous driving and mobile robotics.
+            MVPCC-Net aggregates multi-view 2D depth projections through a deep encoder-decoder architecture,
+            producing geometrically accurate and dense 3D point cloud completions for occluded vehicles and objects.
+          </p>
+          <div class="demo-method">
+            <strong>Method:</strong> Multi-view 2D projection · Graph-based feature aggregation · PointNet++ encoder · Folding-based decoder · Trained on ShapeNet &amp; SZTAKI MLS dataset
+          </div>
+          <div class="demo-tags">
+            <span class="tag">PyTorch</span>
+            <span class="tag">Point Cloud</span>
+            <span class="tag">3D Vision</span>
+            <span class="tag">NeRF</span>
+            <span class="tag">3D Gaussian Splatting</span>
+            <span class="tag">Autonomous Driving</span>
+          </div>
+          <div class="demo-links">
+            <a href="https://github.com/sztaki-geocomp/Multi-view-3d-completion" class="demo-btn" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
+            <a href="https://www.sciencedirect.com/science/article/pii/S0262885623000495" class="demo-btn" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i> Paper</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ② Remote Sensing / IEW -->
+      <div class="demo-item">
+        <div class="demo-video-col">
+          <span class="demo-video-label">Remote Sensing</span>
+          <video controls style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover">
+            <source src="videos/satellite.webm" type="video/webm">
+          </video>
+        </div>
+        <div class="demo-text-col">
+          <h4>Inland Excess Water Monitoring via Satellite Imagery</h4>
+          <p class="demo-pub-ref">SplitClass · ICCVW, IEEE/CVF SEA Workshop · 2025</p>
+          <p class="demo-desc">
+            Develops a temporal-aware semantic segmentation framework for detecting and mapping inland excess water (IEW)
+            using multi-temporal Sentinel-1 SAR and Sentinel-2 multispectral imagery.
+            A temporal gap-filling module handles missing observations due to cloud contamination,
+            enabling continuous operational monitoring across agricultural regions.
+          </p>
+          <div class="demo-method">
+            <strong>Method:</strong> SplitClass segmentation network · Sentinel-1/2 fusion · Temporal gap-filling · Deployed on HuggingFace Spaces
+          </div>
+          <div class="demo-tags">
+            <span class="tag">Sentinel-1/2</span>
+            <span class="tag">Segmentation</span>
+            <span class="tag">Remote Sensing</span>
+            <span class="tag">ICCVW 2025</span>
+          </div>
+          <div class="demo-links">
+            <a href="https://waterdetection.github.io/water_detection/" class="demo-btn" target="_blank" rel="noopener"><i class="fas fa-globe"></i> Project Page</a>
+            <a href="https://huggingface.co/spaces/Yahyasztaki/water_flooding_1" class="demo-btn" target="_blank" rel="noopener"><i class="fas fa-image"></i> Live Demo</a>
+            <a href="https://openaccess.thecvf.com/content/ICCV2025W/SEA/papers/Ibrahim_Inland_Excess_Water_IEW_Monitoring_Using_Sentinel-12_A_SplitClass_Segmentation_ICCVW_2025_paper.pdf" class="demo-btn" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i> Paper</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ Masonry / Image Analysis -->
+      <div class="demo-item">
+        <div class="demo-video-col">
+          <span class="demo-video-label">Image Analysis</span>
+          <video controls style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover">
+            <source src="videos/masonry.webm" type="video/webm">
+          </video>
+        </div>
+        <div class="demo-text-col">
+          <h4>GAN-Based Masonry Wall Analysis &amp; Structural Inpainting</h4>
+          <p class="demo-pub-ref">WACV 2021 · MDPI Remote Sensing 2020 · 39 citations</p>
+          <p class="demo-desc">
+            Develops a full pipeline for automated analysis of historical masonry walls:
+            CNN-based watershed-driven brick segmentation, followed by a GAN-based blind inpainting model
+            that reconstructs damaged or missing regions without requiring explicit damage masks.
+            Evaluated on a custom dataset of Hungarian heritage structures.
+          </p>
+          <div class="demo-method">
+            <strong>Method:</strong> Watershed marker extraction (CNN) · Blind inpainting GAN · No mask supervision · Heritage wall dataset · Live interactive demo
+          </div>
+          <div class="demo-tags">
+            <span class="tag">CNN</span>
+            <span class="tag">GAN</span>
+            <span class="tag">Inpainting</span>
+            <span class="tag">Computer Vision</span>
+          </div>
+          <div class="demo-links">
+            <a href="http://mplab.sztaki.hu/geocomp/masonryWallAnalysis" class="demo-btn" target="_blank" rel="noopener"><i class="fas fa-globe"></i> Project Page</a>
+            <a href="https://imgproc.mplab.sztaki.hu/i" class="demo-btn" target="_blank" rel="noopener"><i class="fas fa-image"></i> Live Demo</a>
+            <a href="https://www.mdpi.com/2072-4292/12/23/3918" class="demo-btn" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i> Paper</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ④ Drones + Underwater LiDAR -->
+      <div class="demo-item">
+        <div class="demo-video-col">
+          <span class="demo-video-label">🚧 In Progress</span>
+          <div class="demo-video-empty">
+            <i class="fas fa-play-circle"></i>
+            <span>Demo video upcoming</span>
+            <code>EU Proactif Project</code>
+          </div>
+        </div>
+        <div class="demo-text-col">
+          <h4>AI Perception for Drones &amp; Underwater LiDAR Sensing</h4>
+          <p class="demo-pub-ref">EU Proactif Project · Mission 1.4 · Ongoing</p>
+          <p class="demo-desc">
+            Developing real-time AI perception systems for autonomous drone navigation and underwater LiDAR-based
+            3D mapping within the EU Proactif emergency management project.
+            The work extends 3D scene understanding from outdoor LiDAR to aerial and subsurface environments,
+            integrating perception with robot operating system pipelines for embedded deployment.
+          </p>
+          <div class="demo-method">
+            <strong>Method:</strong> ROS2 · Drone perception stack · Underwater LiDAR processing · 3D scene reconstruction · Embedded AI deployment
+          </div>
+          <div class="demo-tags">
+            <span class="tag">ROS2</span>
+            <span class="tag">Drones</span>
+            <span class="tag">Underwater LiDAR</span>
+            <span class="tag">3D Sensing</span>
+            <span class="tag">Embedded AI</span>
+          </div>
+          <div class="demo-links">
+            <a href="https://proactif-project.eu/emergency-management-and-first-response/#pilot4" class="demo-btn" target="_blank" rel="noopener"><i class="fas fa-globe"></i> Proactif Mission 1.4</a>
+            <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=1ShbTvIAAAAJ&citation_for_view=1ShbTvIAAAAJ:roLk4NBRz8UC" class="demo-btn" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Related Work</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Methods & Tools ── -->
+<section id="skills">
+  <div class="container">
+    <p class="section-label">06. Methods</p>
+    <h2 class="section-title">Methods &amp; Technical Expertise</h2>
+    <p class="section-sub">Frameworks, architectures, and tools employed across research and development.</p>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h4>Programming</h4>
+        <span class="tag">Python</span>
+        <span class="tag">MATLAB</span>
+        <span class="tag">C++</span>
+      </div>
+      <div class="skill-group">
+        <h4>DL Frameworks</h4>
+        <span class="tag">PyTorch</span>
+        <span class="tag">TensorFlow</span>
+        <span class="tag">Keras</span>
+        <span class="tag">PyTorch Lightning</span>
+      </div>
+      <div class="skill-group">
+        <h4>Computer Vision &amp; 3D</h4>
+        <span class="tag">OpenCV</span>
+        <span class="tag">Open3D</span>
+        <span class="tag">PCL</span>
+        <span class="tag">scikit-image</span>
+        <span class="tag">NeRF</span>
+        <span class="tag">3D Gaussian Splatting</span>
+      </div>
+      <div class="skill-group">
+        <h4>Architectures</h4>
+        <span class="tag">Transformer</span>
+        <span class="tag">Autoregressive</span>
+        <span class="tag">CNN</span>
+        <span class="tag">GAN</span>
+      </div>
+      <div class="skill-group">
+        <h4>Research Tools</h4>
+        <span class="tag">ROS2</span>
+        <span class="tag">Weights &amp; Biases</span>
+        <span class="tag">Jupyter</span>
+        <span class="tag">LaTeX</span>
+        <span class="tag">Git</span>
+        <span class="tag">Docker</span>
+        <span class="tag">Linux / HPC</span>
+      </div>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">11</div>
+        <div class="stat-label">Publications</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">163</div>
+        <div class="stat-label">Citations</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">h-index</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5</div>
+        <div class="stat-label">i10-index</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>Dr. Yahya Ibrahim &nbsp;·&nbsp; Machine Perception Laboratory, HUN-REN SZTAKI &nbsp;·&nbsp; Budapest, Hungary &nbsp;·&nbsp; 2026</p>
+  <p style="margin-top:8px"><a href="mailto:yahyaibrahim6@gmail.com">yahyaibrahim6@gmail.com</a> &nbsp;·&nbsp; <a href="https://orcid.org/0000-0003-0131-985X" target="_blank">ORCID</a> &nbsp;·&nbsp; <a href="https://scholar.google.com/citations?user=1ShbTvIAAAAJ&hl=en" target="_blank">Google Scholar</a></p>
+</footer>
+
+<!-- ── JS ── -->
+<script>
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    document.getElementById('scrollLine').style.width = (scrolled / total * 100) + '%';
+  });
+
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  document.querySelectorAll('.pub-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.pub-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  function animateNum(el, target, duration) {
+    let start = 0;
+    const step = Math.ceil(target / (duration / 16));
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { el.textContent = target + '+'; clearInterval(timer); }
+      else el.textContent = start + '+';
+    }, 16);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.stat-num').forEach(el => {
+          const val = parseInt(el.textContent);
+          if (val > 0) animateNum(el, val, 1200);
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const statsRow = document.querySelector('.stats-row');
+  if (statsRow) observer.observe(statsRow);
+</script>
+</body>
+</html>
